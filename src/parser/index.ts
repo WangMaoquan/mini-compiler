@@ -3,8 +3,8 @@ import {
   createStringLiteralNode,
   createNumberLiteralNode,
   createCallExpression,
-} from "../ast";
-import { Token, TokenTypes } from "../tokenizer";
+} from '../ast';
+import { Token, TokenTypes } from '../tokenizer';
 
 const parser = (tokens: Token[]) => {
   const root = createRootNode();
@@ -26,7 +26,7 @@ const parser = (tokens: Token[]) => {
       return createStringLiteralNode(token.value);
     }
 
-    if (token.type === TokenTypes.Paren && token.value === "(") {
+    if (token.type === TokenTypes.Paren && token.value === '(') {
       token = tokens[++current];
 
       let node = createCallExpression(token.value);
@@ -37,7 +37,7 @@ const parser = (tokens: Token[]) => {
       while (
         // token.type !== TokenType.paren ||
         // (token.type === TokenType.paren && token.value !== ")")
-        !(token.type === TokenTypes.Paren && token.value === ")")
+        !(token.type === TokenTypes.Paren && token.value === ')')
       ) {
         node.params.push(walk());
         token = tokens[current];
@@ -50,15 +50,13 @@ const parser = (tokens: Token[]) => {
     }
 
     throw new Error(`识别不了的 token: ${token}`);
-  }
+  };
 
   while (current < tokens.length) {
     root.body.push(walk());
   }
 
   return root;
-}
+};
 
-export {
-  parser
-}
+export { parser };
